@@ -27,12 +27,6 @@ license="GPL2"
 
 _abi_release=${pkgver}
 _carch=${CARCH}
-case "$_carch" in
-aarch64*) _carch="arm64" ;;
-arm*) _carch="arm" ;;
-ppc*) _carch="powerpc" ;;
-s390*) _carch="s390" ;;
-esac
 
 HOSTCC="${CC:-gcc}"
 HOSTCC="${HOSTCC#${CROSS_COMPILE}}"
@@ -94,10 +88,6 @@ package() {
 		ARCH="$_carch" \
 		INSTALL_PATH="$pkgdir"/boot \
 		|| return 1
-
-	rm -f "$pkgdir"/lib/modules/${_abi_release}/build \
-		"$pkgdir"/lib/modules/${_abi_release}/source
-	rm -rf "$pkgdir"/lib/firmware
 }
 
 sha512sums="bf67ff812cc3cb7e5059e82cc5db0d9a7c5637f7ed9a42e4730c715bf7047c81ed3a571225f92a33ef0b6d65f35595bc32d773356646df2627da55e9bc7f1f1a  linux-4.9.tar.xz
