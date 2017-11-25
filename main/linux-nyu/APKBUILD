@@ -7,8 +7,8 @@ case $pkgver in
 	*.*.*)	_kernver=${pkgver%.*};;
 	*.*) _kernver=$pkgver;;
 esac
-pkgrel=0
-pkgdesc="Linux kernel, $_{flavor} flavor"
+pkgrel=1
+pkgdesc="Linux kernel, ${_flavor} flavor"
 url="http://kernel.org"
 makedepends="perl sed installkernel bash gmp-dev bc linux-headers elfutils-dev linux-firmware libressl-dev"
 options="!strip"
