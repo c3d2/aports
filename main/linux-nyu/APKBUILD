@@ -1,0 +1,105 @@
+# Maintainer: Ain <ain@waifu.club>
+
+_flavor=nyu
+pkgname=linux-${_flavor}
+pkgver=4.9.65
+case $pkgver in
+	*.*.*)	_kernver=${pkgver%.*};;
+	*.*) _kernver=$pkgver;;
+esac
+pkgrel=0
+pkgdesc="Linux kernel, $_{flavor} flavor"
+url="http://kernel.org"
+makedepends="perl sed installkernel bash gmp-dev bc linux-headers elfutils-dev linux-firmware libressl-dev"
+options="!strip"
+_config=${config:-config-${_flavor}.${CARCH}}
+install=
+source="https://cdn.kernel.org/pub/linux/kernel/v${pkgver%%.*}.x/linux-$_kernver.tar.xz
+	config-nyu.x86_64
+
+	"
+if [ "${pkgver%.0}" = "$pkgver" ]; then
+	source="$source
+	https://cdn.kernel.org/pub/linux/kernel/v${pkgver%%.*}.x/patch-$pkgver.xz"
+fi
+arch="x86_64"
+license="GPL2"
+
+_abi_release=${pkgver}
+_carch=${CARCH}
+case "$_carch" in
+aarch64*) _carch="arm64" ;;
+arm*) _carch="arm" ;;
+ppc*) _carch="powerpc" ;;
+s390*) _carch="s390" ;;
+esac
+
+HOSTCC="${CC:-gcc}"
+HOSTCC="${HOSTCC#${CROSS_COMPILE}}"
+
+prepare() {
+	local _patch_failed=
+	cd "$srcdir"/linux-$_kernver
+	if [ "$_kernver" != "$pkgver" ]; then
+		msg "Applying patch-$pkgver.xz"
+		unxz -c < "$srcdir"/patch-$pkgver.xz | patch -p1 -N || return 1
+	fi
+
+	# first apply patches in specified order
+	for i in $source; do
+		case $i in
+		*.patch)
+			msg "Applying $i..."
+			if ! patch -s -p1 -N -i "$srcdir"/$i; then
+				echo $i >>failed
+				_patch_failed=1
+			fi
+			;;
+		esac
+	done
+
+	if ! [ -z "$_patch_failed" ]; then
+		error "The following patches failed:"
+		cat failed
+		return 1
+	fi
+
+	mkdir -p "$srcdir"/build
+	cp "$srcdir"/$_config "$srcdir"/build/.config || return 1
+	make -C "$srcdir"/linux-$_kernver O="$srcdir"/build ARCH="$_carch" HOSTCC="$HOSTCC" \
+		silentoldconfig
+}
+
+# this is so we can do: 'abuild menuconfig' to reconfigure kernel
+menuconfig() {
+	cd "$srcdir"/build || return 1
+	make ARCH="$_carch" menuconfig
+	cp .config "$startdir"/$_config
+}
+
+build() {
+	cd "$srcdir"/build
+	unset LDFLAGS
+	make ARCH="$_carch" CC="${CC:-gcc}" \
+		KBUILD_BUILD_VERSION="$((pkgrel + 1 ))-Alpine" \
+		|| return 1
+}
+
+package() {
+	cd "$srcdir"/build
+
+	mkdir -p "$pkgdir"/boot
+
+	make -j1 install \
+		ARCH="$_carch" \
+		INSTALL_PATH="$pkgdir"/boot \
+		|| return 1
+
+	rm -f "$pkgdir"/lib/modules/${_abi_release}/build \
+		"$pkgdir"/lib/modules/${_abi_release}/source
+	rm -rf "$pkgdir"/lib/firmware
+}
+
+sha512sums="bf67ff812cc3cb7e5059e82cc5db0d9a7c5637f7ed9a42e4730c715bf7047c81ed3a571225f92a33ef0b6d65f35595bc32d773356646df2627da55e9bc7f1f1a  linux-4.9.tar.xz
+14620da50effea1e677faf5cf01cfb596a4850e6a6cb3839b4be53f930d7a4f735452c3d0dc041d12a0882bd4c48cc4f81e2eddf21445d111b25910fb2a90136  config-nyu.x86_64
+f22ec263901248adb0b660e5ea6f9c550f28f53dcd27d4a5148a932bce3b92f91cd921ff1d62096ac78c235e7abbeafa7ae33fc4f042e7d876e1fd58945554ce  patch-4.9.65.xz"
