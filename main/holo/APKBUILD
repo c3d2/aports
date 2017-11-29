@@ -1,0 +1,43 @@
+# Maintainer: Ain <ain@waifu.club>
+pkgname=holo
+pkgver=2.0.3
+pkgrel=0
+pkgdesc="Minimalistic configuration management"
+url="http://holocm.org/"
+arch="all"
+license="GPL 3.0"
+depends="git openssh shadow"
+makedepends="go perl"
+source="${pkgname}-${pkgver}.tar.gz::https://github.com/holocm/holo/archive/v${pkgver}.tar.gz"
+subpackages="
+	$pkgname-bash-completion:bashcomp:noarch
+	$pkgname-zsh-completion:zshcomp:noarch
+	$pkgname-doc
+	"
+
+build() {
+	make
+}
+
+package() {
+	cd "$srcdir"/"${pkgname}-${pkgver}"
+	make DESTDIR="$pkgdir" install
+}
+
+bashcomp() {
+        pkgdesc="Bash completion for $pkgname"
+        depends=""
+
+	mkdir -p "$subpkgdir"/usr/share/bash-completion/completions
+	mv "$pkgdir"/usr/share/bash-completion/completions/holo "$subpkgdir"/usr/share/bash-completion/completions/holo
+}
+
+zshcomp() {
+        pkgdesc="Zsh completion for $pkgname"
+        depends=""
+
+	mkdir -p "$subpkgdir"/usr/share/zsh/site-functions
+	mv "$pkgdir"/usr/share/zsh/site-functions/_holo "$subpkgdir"/usr/share/zsh/site-functions/_holo
+}
+
+sha512sums="26cd2c136d827a819e675f403acd7f0d19554cf0571fd4e6b3208a1d962e521751d47dfa8092f6f309e5ee6ff5c09364388c29049144559c62482b693914aeb1  holo-2.0.3.tar.gz"
