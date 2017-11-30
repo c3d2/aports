@@ -1,6 +1,6 @@
 # Maintainer: Ain <ain@waifu.club>
 pkgname=holo
-pkgver=2.0.3
+pkgver=2.1
 pkgrel=0
 pkgdesc="Minimalistic configuration management"
 url="http://holocm.org/"
@@ -40,4 +40,4 @@ zshcomp() {
 	mv "$pkgdir"/usr/share/zsh/site-functions/_holo "$subpkgdir"/usr/share/zsh/site-functions/_holo
 }
 
-sha512sums="26cd2c136d827a819e675f403acd7f0d19554cf0571fd4e6b3208a1d962e521751d47dfa8092f6f309e5ee6ff5c09364388c29049144559c62482b693914aeb1  holo-2.0.3.tar.gz"
+sha512sums="252cb105cee2cf080833dff08c078d7730ff1fa007051770bef9ebe94b4f018672de0d80fe5f8c30f70c531af61d0c3182725f0bda95e982bb761fe3cd0f55e7  holo-2.1.tar.gz"
