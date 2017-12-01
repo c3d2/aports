@@ -15,7 +15,7 @@ options="!strip"
 _config=${config:-config-${_flavor}.${CARCH}}
 install=
 source="https://cdn.kernel.org/pub/linux/kernel/v${pkgver%%.*}.x/linux-$_kernver.tar.xz
-	config-nyu.x86_64
+	${_config}
 
 	"
 if [ "${pkgver%.0}" = "$pkgver" ]; then
