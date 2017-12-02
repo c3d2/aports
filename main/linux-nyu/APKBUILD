@@ -7,7 +7,7 @@ case $pkgver in
 	*.*.*)	_kernver=${pkgver%.*};;
 	*.*) _kernver=$pkgver;;
 esac
-pkgrel=1
+pkgrel=2
 pkgdesc="Linux kernel, ${_flavor} flavor"
 url="http://kernel.org"
 makedepends="perl sed installkernel bash gmp-dev bc linux-headers elfutils-dev linux-firmware libressl-dev"
@@ -91,5 +91,5 @@ package() {
 }
 
 sha512sums="bf67ff812cc3cb7e5059e82cc5db0d9a7c5637f7ed9a42e4730c715bf7047c81ed3a571225f92a33ef0b6d65f35595bc32d773356646df2627da55e9bc7f1f1a  linux-4.9.tar.xz
-be4aa997873fad9c4281acd79afb0d06f186a9d067349e8ad16308e7086164f5dfac224430314bcaff9f389f3c6c1bb4e75300f7247a7872c5965613db3d3d72  config-nyu.x86_64
+19788c0a3380d4ad11982547cc99bfbb8d3774b59b81da87eba7f3aa3412e59c6b93e2daa030c548479cfe857e6604872d6724c0d437e556eedf25839d5a19ec  config-nyu.x86_64
 3c99b3043333bf673a1795ef314a0601ca0d5e4521786798677ae3978d2e6ffc2d820caec71dac09dd6f1b0cfaee2ac363e809d0e567edb764b843d33d35edfa  patch-4.9.66.xz"
