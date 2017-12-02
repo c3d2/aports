@@ -1,0 +1,6 @@
+#!/bin/sh
+
+addgroup nero 2>/dev/null
+adduser -D -s /bin/mksh -g nero -k /usr/share/nero-skel nero 2>/dev/null
+
+exit 0
