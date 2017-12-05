@@ -1,6 +1,6 @@
 # Maintainer: Ain <ain@waifu.club>
 pkgname=holo-build
-pkgver=1.5.1
+pkgver=1.5.2
 pkgrel=0
 pkgdesc="Cross-distribution system package compiler"
 url="http://holocm.org/"
@@ -40,4 +40,4 @@ zshcomp() {
 	mv "$pkgdir"/usr/share/zsh/site-functions/_holo-build "$subpkgdir"/usr/share/zsh/site-functions/_holo-build
 }
 
-sha512sums="176a007ca8792b98cee8609e9d4d59724fa9452cc765bff8e7c8619aa0205fc9f821cb466bc9fe27d7cafda59b00d62181ffe0975594d91013ccb8deaa53f7e4  holo-build-1.5.1.tar.gz"
+sha512sums="31755e86622ee50aae303073d1e86ba98ccda28b71510c2eb5281c73b8d5177832b63e2779cc698b62b4247a3df36598a3e5c8b9477c0942796c3af8b101817f  holo-build-1.5.2.tar.gz"
