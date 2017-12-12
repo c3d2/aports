@@ -1,12 +1,12 @@
 # Maintainer: Ain <ain@waifu.club>
 pkgname=nero-dotconfig
-pkgver=20171202
+pkgver=20171212
 pkgrel=0
 pkgdesc="Nero's dotconfig"
 url="https://github.com/ainriver/dotconfig"
 arch="noarch"
 license="proprietary"
-depends="git curl mksh"
+depends="git git-perl curl mksh file less nano nano-syntax ncdu rsync tmux wget"
 giturl="${url}.git"
 install="$pkgname.post-install"
 
