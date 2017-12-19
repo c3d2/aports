@@ -1,12 +1,12 @@
 # Maintainer: Ain <ain@waifu.club>
 pkgname=holo
-pkgver=2.1
+pkgver=2.2
 pkgrel=0
 pkgdesc="Minimalistic configuration management"
 url="http://holocm.org/"
 arch="all"
 license="GPL 3.0"
-depends="git openssh shadow"
+depends="git openssh shadow bash"
 makedepends="go perl"
 source="${pkgname}-${pkgver}.tar.gz::https://github.com/holocm/holo/archive/v${pkgver}.tar.gz"
 subpackages="
@@ -40,4 +40,4 @@ zshcomp() {
 	mv "$pkgdir"/usr/share/zsh/site-functions/_holo "$subpkgdir"/usr/share/zsh/site-functions/_holo
 }
 
-sha512sums="252cb105cee2cf080833dff08c078d7730ff1fa007051770bef9ebe94b4f018672de0d80fe5f8c30f70c531af61d0c3182725f0bda95e982bb761fe3cd0f55e7  holo-2.1.tar.gz"
+sha512sums="2d10751217760b230167ace1d9efa8ddc134ce40f2c46bd40df6fa6490cb2257bb3a047da519adc871b40b5119ad8afa60cc33540c1925ae968e79b9231a499e  holo-2.2.tar.gz"
