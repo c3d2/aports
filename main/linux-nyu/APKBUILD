@@ -2,12 +2,12 @@
 
 _flavor=nyu
 pkgname=linux-${_flavor}
-pkgver=4.9.71
+pkgver=4.9.72
 case $pkgver in
 	*.*.*)	_kernver=${pkgver%.*};;
 	*.*) _kernver=$pkgver;;
 esac
-pkgrel=1
+pkgrel=0
 pkgdesc="Linux kernel, ${_flavor} flavor"
 url="http://kernel.org"
 makedepends="perl sed installkernel bash gmp-dev bc linux-headers elfutils-dev linux-firmware libressl-dev"
@@ -92,4 +92,4 @@ package() {
 
 sha512sums="bf67ff812cc3cb7e5059e82cc5db0d9a7c5637f7ed9a42e4730c715bf7047c81ed3a571225f92a33ef0b6d65f35595bc32d773356646df2627da55e9bc7f1f1a  linux-4.9.tar.xz
 16cf81bb95a974fb56c2d707065b195083a1d7dfe8461720bf8c73d2a70f1fb0b82ad10834f57a44226a5402de23d261d7061874869297c80dcb394c0b11fbf9  config-nyu.x86_64
-99f089156ceea6367ee21390d8faaa02e81662430ec284c17fa1b3e91ba57d55c0df511614c6dda2443902eecad8a258e197327f4b9bd678487b8904f1553a31  patch-4.9.71.xz"
+414007fd378ea3813c462a75b22704de74dcbae1f07feecfed228a677099f132bfe7aa8a101da6c712d938f38522e0d918aff1fdd9bdcf9a20d3e238cb7ea40d  patch-4.9.72.xz"
