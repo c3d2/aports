@@ -1,4 +1,4 @@
-# Maintainer: Ain <ain@waifu.club>
+# Maintainer: Nero <nero@w1r3.net>
 
 _flavor=nyu
 pkgname=linux-${_flavor}
