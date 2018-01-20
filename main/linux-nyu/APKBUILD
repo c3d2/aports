@@ -10,7 +10,7 @@ esac
 pkgrel=0
 pkgdesc="Linux kernel, ${_flavor} flavor"
 url="http://kernel.org"
-makedepends="perl sed installkernel bash gmp-dev bc linux-headers elfutils-dev linux-firmware libressl-dev"
+makedepends="perl sed installkernel bash gmp-dev bc linux-headers elfutils-dev linux-firmware-intel libressl-dev"
 options="!strip !check"
 _config=${config:-config-${_flavor}.${CARCH}}
 install=
