@@ -1,0 +1,19 @@
+# Maintainer: Nero <nero@w1r3.net>
+pkgname=xdg-base-dirs
+pkgver=0.1
+pkgrel=0
+pkgdesc="Automatically set up XDG base dirs"
+url="http://nero.github.io/"
+arch="noarch"
+license="MIT"
+source="xdg-base-dirs xdg-base-dirs.sh"
+options="!check"
+
+package() {
+	mkdir -p "$pkgdir/etc/init.d" "$pkgdir/etc/profile.d"
+	install -m 0755 xdg-base-dirs "$pkgdir/etc/init.d/"
+	install -m 0644 xdg-base-dirs.sh "$pkgdir/etc/profile.d/"
+}
+
+sha512sums="1d23c02b0089d2731aac039fd4e7174bf31fe6b710e0feb51c68245a322e3fb356492d56ec43f73088211a3d06bca6305cc8d143ca12694ab04ef7dae0304b36  xdg-base-dirs
+894032296c59b19eb574b3063001415d09b45c3460fb30793b57a42c0194d0a969407da69786a48e0e630acbb0ad9d32750a7e831da191e9c65506172e6f6096  xdg-base-dirs.sh"
