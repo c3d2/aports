@@ -2,7 +2,7 @@
 
 _flavor=nyu
 pkgname=linux-${_flavor}
-pkgver=4.9.80
+pkgver=4.9.81
 case $pkgver in
 	*.*.*)	_kernver=${pkgver%.*};;
 	*.*) _kernver=$pkgver;;
@@ -92,4 +92,4 @@ package() {
 
 sha512sums="bf67ff812cc3cb7e5059e82cc5db0d9a7c5637f7ed9a42e4730c715bf7047c81ed3a571225f92a33ef0b6d65f35595bc32d773356646df2627da55e9bc7f1f1a  linux-4.9.tar.xz
 9132648a95982ee22d4e5821ff73df70388e22fed2cc9dc0eb213cb5a5f6612fe63010b852fc1e1301a2b0987af9e72add48c69940e2576ea72e19361278644c  config-nyu.x86_64
-fc6c3a4d9803c25c6f601590630f42bceb4330d646c91813c3c86dbfae97d40a9a61278ba5f5013c1ff4a22542fa4db1031f6358e26c1a6137cdd70b6d270433  patch-4.9.80.xz"
+3a2b8e6d2db301ddf54125e5caec50a8ab5562a8dd4888370fcd557ecb5494e967e7f7bf85c22a6fd9cbe8d89cf3992ee95c3a6191674d88f1997fffa273baa8  patch-4.9.81.xz"
