@@ -1,6 +1,6 @@
 # Maintainer: Nero <nero@w1r3.net>
 pkgname=xdg-base-dirs
-pkgver=0.1
+pkgver=0.2
 pkgrel=0
 pkgdesc="Automatically set up XDG base dirs"
 url="http://nero.github.io/"
@@ -16,4 +16,4 @@ package() {
 }
 
 sha512sums="1d23c02b0089d2731aac039fd4e7174bf31fe6b710e0feb51c68245a322e3fb356492d56ec43f73088211a3d06bca6305cc8d143ca12694ab04ef7dae0304b36  xdg-base-dirs
-894032296c59b19eb574b3063001415d09b45c3460fb30793b57a42c0194d0a969407da69786a48e0e630acbb0ad9d32750a7e831da191e9c65506172e6f6096  xdg-base-dirs.sh"
+2b90ea26d7119a4a268f5907acd0d151be5841802057781b3149781c129edcff44f3d9f8a9e7c5bb24ca32023eae05b9c0c162c6d09540662c787ed61e884498  xdg-base-dirs.sh"
