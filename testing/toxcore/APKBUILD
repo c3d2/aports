@@ -1,0 +1,46 @@
+# Maintainer: Jonathan Sieber <mail@strfry.org>
+
+pkgname=toxcore
+pkgver=0.2.2
+pkgrel=0
+pkgdesc="Tox communication project - Core Library"
+url="https://tox.chat/"
+arch="all"
+license="GPL"
+makedepends="autoconf automake libtool linux-headers cmake libsodium-dev"
+subpackages="$pkgname-dev $pkgname-doc"
+source="$pkgname-$pkgver.tar.gz::https://github.com/TokTok/c-toxcore/archive/v$pkgver.tar.gz"
+
+builddir="$srcdir/c-$pkgname-$pkgver"
+
+prepare() {
+	cd "$builddir"
+	cmake . \
+		-DCMAKE_INSTALL_PREFIX=/usr \
+		-DCMAKE_BUILD_TYPE=Release \
+		-DCMAKE_INSTALL_LIBDIR=lib \
+		|| return 1
+
+	default_prepare
+}
+
+build() {
+	cd "$builddir"
+
+	make
+}
+
+check() {
+	cd "$builddir"
+	make test
+}
+
+package() {
+	cd "$builddir"
+
+	make DESTDIR="$pkgdir" install
+	install -Dm644 LICENSE.md \
+		"$pkgdir/usr/share/licenses/$pkgname/LICENSE"
+}
+
+sha512sums="6fda4b60edfa70660dc355d507c86fcdbe1af137d62b4601aa39b6248b4519087c0e76f69075bcddbc42c363dc38a7cbdb78720caa7a289330124c23f5e63c18  toxcore-0.2.2.tar.gz"
