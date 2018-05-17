@@ -1,0 +1,28 @@
+# Maintainer: Jonathan Sieber <mail@strfry.org>
+pkgname=filteraudio
+pkgver=0.0.1
+pkgrel=0
+pkgdesc="An easy to use audio filtering library made from webrtc code"
+url="https://github.com/irungentoo/filter_audio"
+arch="all"
+license="BSD"
+depends=""
+depends_dev=""
+makedepends="$depends_dev"
+install=""
+subpackages="$pkgname-dev"
+source="filteraudio-$pkgver.tar.gz::https://github.com/irungentoo/filter_audio/archive/v$pkgver.tar.gz"
+builddir="$srcdir/filter_audio-$pkgver"
+options="!check"
+
+build() {
+	cd "$builddir"
+	make
+}
+
+package() {
+	cd "$builddir"
+	make DESTDIR="$pkgdir" PREFIX=/usr install
+}
+
+sha512sums="9ae4d77ddc0c9f604642a6a968ead684affd9dc957ab4ddc3cf9974da028b9c402155322a63dbbcdb7dc8e3eec63c2fcef267862580229cfc01bc496f990ed58  filteraudio-0.0.1.tar.gz"
