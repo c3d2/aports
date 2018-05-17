@@ -1,0 +1,47 @@
+# Maintainer: Jonathan Sieber <mail@strfry.org>
+pkgname=utox
+pkgver=0.17.0
+pkgrel=0
+pkgdesc="µTox the lightest and fluffiest Tox client"
+url="https://github.com/uTox/uTox"
+arch="all"
+license="MIT"
+depends=""
+depends_dev=""
+makedepends="cmake check-dev linux-headers toxcore-dev dbus-dev
+	freetype-dev fontconfig-dev libx11-dev libxrender-dev libxext-dev
+	v4l-utils-dev libvpx-dev opus-dev
+	openal-soft-dev filteraudio-dev"
+install=""
+subpackages="$pkgname-doc"
+source="https://github.com/uTox/uTox/releases/download/v0.17.0/uTox-$pkgver-full.tar.gz"
+builddir="$srcdir/uTox"
+
+build() {
+	cd "$builddir"
+	if [ "$CBUILD" != "$CHOST" ]; then
+		CMAKE_CROSSOPTS="-DCMAKE_SYSTEM_NAME=Linux -DCMAKE_HOST_SYSTEM_NAME=Linux"
+	fi
+	cmake \
+		-DCMAKE_INSTALL_PREFIX=/usr \
+		-DCMAKE_INSTALL_LIBDIR=lib \
+		-DBUILD_SHARED_LIBS=True \
+		-DCMAKE_BUILD_TYPE=Release \
+		-DCMAKE_CXX_FLAGS="$CXXFLAGS" \
+		-DCMAKE_C_FLAGS="$CFLAGS" \
+		-DENABLE_TESTS=ON \
+		${CMAKE_CROSSOPTS}
+	make
+}
+
+check() {
+	cd "$builddir"
+	make test
+}
+
+package() {
+	cd "$builddir"
+	make DESTDIR="$pkgdir" install
+}
+
+sha512sums="1d1fa66088ab3e2b4e4b6af7d5aab0b7207a5dd096b7d6a9e121d2f6352e61a62e7441a620ab8e744f0a86a1af7ddde039c69570b25b193132c87c905296b0fc  uTox-0.17.0-full.tar.gz"
