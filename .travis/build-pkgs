@@ -9,7 +9,7 @@ set -eu
 changed_repos() {
 	local commit_ish="$1"
 
-	local repo; for repo in main community testing non-free unmaintained; do
+	local repo; for repo in extra ewindow raspberrypi; do
 		git diff-tree --exit-code "$commit_ish" -- $repo >/dev/null \
 			|| echo "$repo"
 	done
