@@ -1,0 +1,45 @@
+--- src/re-0.5.6/src/net/ifaddrs.c
++++ re-patched/src/net/ifaddrs.c
+@@ -6,6 +6,7 @@
+ #include <unistd.h>
+ #include <sys/socket.h>
+ #define __USE_MISC 1   /**< Use MISC code */
++#define _BSD_SOURCE
+ #include <net/if.h>
+ #include <ifaddrs.h>
+ #include <re_types.h>
+--- src/re-0.5.6/src/net/posix/pif.c
++++ re-patched/src/net/posix/pif.c
+@@ -11,6 +11,7 @@
+ #define __USE_XOPEN2K 1/**< Use POSIX.1:2001 code */
+ #include <netdb.h>
+ #define __USE_MISC 1   /**< Use MISC code */
++#define _BSD_SOURCE
+ #include <net/if.h>
+ #include <arpa/inet.h>
+ /*#include <net/if_arp.h>*/
+--- src/re-0.5.6/src/tcp/tcp.c
++++ re-patched/src/tcp/tcp.c
+@@ -14,6 +14,7 @@
+ #define __USE_POSIX 1  /**< Use POSIX flag */
+ #define __USE_XOPEN2K 1/**< Use POSIX.1:2001 code */
+ #define __USE_MISC 1
++#define _BSD_SOURCE
+ #include <netdb.h>
+ #endif
+ #ifdef __APPLE__
+--- src/re-0.5.6/src/dns/res.c
++++ re-patched/src/dns/res.c
+@@ -18,6 +18,12 @@
+ #include <re_dns.h>
+ #include "dns.h"
+ 
++#if defined(__linux__) && !defined(__GLIBC__) &&	\
++	!defined(__UCLIBC__) &&	!defined(__BIONIC__)
++/* Another popular libc for Linux offers OpenBSD's res_init() API */
++#define OPENBSD OPENBSD
++#endif
++
+ 
+ int get_resolv_dns(char *domain, size_t dsize, struct sa *nsv, uint32_t *n)
+ {

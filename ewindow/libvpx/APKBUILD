@@ -1,0 +1,48 @@
+# Maintainer: Natanael Copa <ncopa@alpinelinux.org>
+pkgname=libvpx
+pkgver=1.7.0
+pkgrel=0
+pkgdesc="Library for the vp8 codec"
+url="https://www.webmproject.org/"
+arch="all"
+license="GPL"
+depends=""
+makedepends="coreutils yasm bash perl"
+subpackages="$pkgname-dev $pkgname-utils"
+source="$pkgname-$pkgver.tar.gz::https://chromium.googlesource.com/webm/$pkgname/+archive/v$pkgver.tar.gz"
+
+srcdir="$srcdir/$pkgname-$pkgver"
+
+builddir="$srcdir"
+build() {
+	cd "$builddir"
+	# build fix for arm
+	export CROSS=" "
+	bash ./configure \
+		--enable-pic \
+		--enable-libs \
+		--enable-runtime-cpu-detect \
+		--enable-vp8 \
+		--enable-vp9 \
+		--enable-shared \
+		--disable-install-srcs \
+		--enable-postproc
+	make
+}
+
+package() {
+	cd "$builddir"
+	make DIST_DIR="$pkgdir"/usr install
+	chmod 644 "$pkgdir"/usr/include/vpx/*.h \
+		"$pkgdir"/usr/lib/pkgconfig/*
+	chown root:root -R "$pkgdir"
+	chmod 755 "$pkgdir"/usr/lib/*
+}
+
+utils() {
+	pkgdesc="VP8 utilities and tools"
+	install -d "$subpkgdir"/usr
+	mv "$pkgdir"/usr/bin "$subpkgdir"/usr/
+}
+
+sha512sums="737f54135d5f48498dab6963a452e24aa5b2b9a1e96091333182394e104f4dbfe199eb4dc66d1d3957114e668491238b0a9765d82cc07cdb5704865f313d10f4  libvpx-1.7.0.tar.gz"

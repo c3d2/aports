@@ -1,0 +1,32 @@
+# Maintainer: Jonathan Sieber <mail@strfry.org>
+pkgname=openh264
+pkgver=1.7.0
+pkgrel=0
+pkgdesc="Cisco's H264 encoder"
+url="https://www.openh264.org/"
+arch="all"
+license="BSD"
+depends=""
+makedepends="nasm"
+subpackages="$pkgname-dev"
+source="$pkgname-$pkgver.tar.gz::https://github.com/cisco/$pkgname/archive/v$pkgver.tar.gz
+	fix-tr-os-detection.patch"
+
+builddir="$srcdir"/$pkgname-$pkgver
+
+build() {
+	cd "$builddir"
+	make
+}
+
+package() {
+	cd "$builddir"
+	make DESTDIR="$pkgdir" PREFIX=/usr install
+	chmod 644 "$pkgdir"/usr/include/wels/*.h \
+		"$pkgdir"/usr/lib/pkgconfig/*
+	chown root:root -R "$pkgdir"
+	chmod 755 "$pkgdir"/usr/lib/*
+}
+
+sha512sums="3e30584d6adb69c162f5b044f49155c22d44ab8e399f6bf09194593df84475b49979406f3e461d25ef1e4422c2721b975c58bc64d40a143d8493d45380ad96aa  openh264-1.7.0.tar.gz
+d46cd9e0a039a284d5d3713d65cc360938570d9a44b5108a3821174697ea61c6c0aff076248e5914be19de97b75783d0f749a64524152cba480e3e2fe4c50558  fix-tr-os-detection.patch"

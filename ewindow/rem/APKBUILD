@@ -1,0 +1,30 @@
+# Contributor:
+# Maintainer: Jonathan Sieber <mail@strfry.org>
+pkgname=rem
+pkgver=0.5.2
+pkgrel=0
+pkgdesc=" Librem is a portable and generic library for real-time audio and video processing. "
+url="http://www.creytiv.com/rem.html"
+arch="all"
+license="BSD"
+depends="re"
+makedepends="re-dev"
+install=""
+options="!check"
+subpackages="$pkgname-dev"
+source="http://www.creytiv.com/pub/rem-0.5.2.tar.gz"
+builddir="$srcdir/$pkgname-$pkgver"
+
+
+build() {
+	cd "$builddir"
+	make || return 1
+}
+
+package() {
+	cd "$builddir"
+	make DESTDIR="$pkgdir" install
+}
+
+
+sha512sums="f15e4ff91c9df84e7751ea16b78a76458e89e0050d5e1e9fb13b37d26875d3985e67c258e551f0bb495bf89f5443002548a5947caf4e709f7249b1d649c17433  rem-0.5.2.tar.gz"

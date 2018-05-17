@@ -1,0 +1,46 @@
+# Contributor:
+# Maintainer: Jonathan Sieber <mail@strfry.org>
+pkgname=baresip
+pkgver=0.5.8
+pkgrel=1
+pkgdesc="Baresip is a portable and modular SIP User-Agent with audio and video support."
+url="http://www.creytiv.com/baresip.html"
+arch="all"
+license="BSD"
+depends="re rem alsa-lib opus libvpx x264 ffmpeg libsndfile"
+makedepends="re-dev rem-dev alsa-lib-dev opus-dev x264-dev ffmpeg-dev libvpx-dev
+	avahi-dev libsndfile-dev pulseaudio-dev"
+if [ $CBUILD = "armv6-alpine-linux-musleabihf" ]; then
+makedepends="$makedepends raspberrypi-dev"
+fi
+
+install=""
+options="!check"
+subpackages="$pkgname-dev"
+#subpackages="$pkgname-dev $pkgname-omx"
+
+source="http://www.creytiv.com/pub/$pkgname-$pkgver.tar.gz
+	fix-install-syntax.patch"
+builddir="$srcdir/$pkgname-$pkgver"
+
+
+build() {
+	cd "$builddir"
+	make STATIC=1 || return 1
+}
+
+#omx() {
+#	pkgdesc="baresip Raspberry Pi OMX video output"
+#	mkdir -p "$subpkgdir"/usr/lib/pulse-$pkgver/modules
+#	mv "$pkgdir"/usr/lib/baresip/modules/omx.so \
+#		"$subpkgdir"/usr/lib/baresip/modules/ || return 1
+#}
+
+package() {
+	cd "$builddir"
+	make STATIC=1 DESTDIR="$pkgdir" install-shared || return 1
+#	make DESTDIR="$pkgdir" install | return 1
+}
+
+sha512sums="234e2331e1195eb2ecf8142e75a6a32eee4f68dd709bbb32b31570dedd43f95940cd513139ea151f7255863751508ee733d4e6a57990075807552fa873057343  baresip-0.5.8.tar.gz
+3b5c617f28be4bc54be4ec0e788f4b185eedfba7871580b7b750535a68070d920a14ecba28b9d4ee6d4ecc012d41939171c21f90b355cb1c50241482872abecb  fix-install-syntax.patch"

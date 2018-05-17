@@ -1,0 +1,32 @@
+# Contributor:
+# Maintainer: Jonathan Sieber <mail@strfry.org>
+pkgname=re
+pkgver=0.5.7
+pkgrel=0
+pkgdesc="Generic library for real-time communications with async IO support"
+url="http://www.creytiv.com/re.html"
+arch="all"
+license="BSD"
+depends="libressl zlib"
+makedepends="libressl-dev linux-headers"
+install=""
+options="!check"
+subpackages="$pkgname-dev"
+source="http://www.creytiv.com/pub/$pkgname-$pkgver.tar.gz
+	musl-libc-fix.patch"
+builddir="$srcdir/$pkgname-$pkgver"
+
+
+build() {
+	cd "$builddir"
+	make || return 1
+}
+
+package() {
+	cd "$builddir"
+	make DESTDIR="$pkgdir" install
+}
+
+
+sha512sums="f9356c9a82056ec3322e87b24b1efb78f9437b6ab4d50662898557c58b5abdd0680452d901ff18e72041e13d3d312bde5b6fd1d30bd5f5b76d957d2c455c01ac  re-0.5.7.tar.gz
+647bcccf3753b998818568270bf1553e95ae7abec1619bcd7917d2e5e68bacba0748f7ab3e5216b2c1ee98842a8ac42eed4bf598272b2f78ff7b283f796c7845  musl-libc-fix.patch"

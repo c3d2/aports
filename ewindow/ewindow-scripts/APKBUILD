@@ -1,0 +1,30 @@
+# Maintainer: Jonathan Sieber <mail@strfry.org>
+pkgname=ewindow-scripts
+pkgver=0.1
+pkgrel=1
+pkgdesc="Support scripts for ewindow"
+ref=8930bc2
+url="https://github.com/teilWERK/ewindow-scripts"
+arch="noarch"
+license="MIT"
+depends="bash dialog ncurses v4l-utils alsa-utils"
+source="teilWERK-$pkgname-$ref.tar.gz::https://api.github.com/repos/teilWERK/ewindow-scripts/tarball/$ref"
+builddir="$srcdir/teilWERK-$pkgname-$ref"
+
+package() {
+	cd "$builddir"
+	mkdir -p $pkgdir/usr/bin
+	mkdir -p $pkgdir/usr/ewindow
+	install menuconfig/status.sh	\
+		$pkgdir/usr/ewindow || return 1
+	install -d \
+		$pkgdir/usr/ewindow/bashsimplecurses || return 1
+	install menuconfig/bashsimplecurses/*	\
+		$pkgdir/usr/ewindow/bashsimplecurses || return 1
+	install	start.sh	\
+		$pkgdir/usr/ewindow || return 1
+	install	configs/peervpn/iproute2	\
+		$pkgdir/usr/bin/ || return 1
+}
+
+sha512sums="a1fc6a73ffa132cba54853994c117380c395c4f388e82053e3cec05d5c06f29f2932377af0ccf5fcefa7149f806f9e6e8bb85f16ff71287b4cf7d8843fea0978  teilWERK-ewindow-scripts-8930bc2.tar.gz"

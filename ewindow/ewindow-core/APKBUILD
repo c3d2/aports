@@ -1,0 +1,36 @@
+# Contributor:
+# Maintainer: Jonathan Sieber <mail@strfry.org>
+pkgname=ewindow-core
+pkgver=0.3
+pkgrel=2
+ref=0914447
+pkgdesc="ewindow is a portable and modular SIP User-Agent with audio and video support."
+url="http://ewindow.org"
+arch="all"
+license="BSD"
+depends="qt5-qtdeclarative re rem baresip"
+makedepends="qt5-qtdeclarative-dev re-dev rem-dev baresip-dev"
+install=""
+options="!check"
+builddir="$srcdir/teilWERK-$pkgname-$ref"
+source="teilWERK-$pkgname-0.3-0-$ref.tar.gz::https://api.github.com/repos/teilWERK/$pkgname/tarball/$ref
+	build-no-deps.patch"
+
+
+build() {
+	cd "$builddir"
+	qmake-qt5 PREFIX="$pkgdir" || return 1
+	make || return 1
+}
+
+package() {
+	cd "$builddir"
+	install -d "$pkgdir"/usr/ewindow/
+	install -m 0755 ewindow "$pkgdir"/usr/ewindow/
+        install -d "$pkgdir"/usr/ewindow/gui
+	install gui/* "$pkgdir"/usr/ewindow/gui
+#	make DESTDIR="$pkgdir" install || return 1
+}
+
+sha512sums="0e49d5db0a4da04af89524aa0e85f3a7ecace490305bdc29fd166dba31803aae27154913d0f13626598ce7546cb5c7e378783109404f225e67d67d904e9f4501  teilWERK-ewindow-core-0.3-0-0914447.tar.gz
+15a0c35f39655868256fcd73d2dba8f386c8a9adb5eb7df75a44416b4223b98a4876d4241b23ed105da43070cd9a0b74f9612df9db2dbb1193a67d3e503423a4  build-no-deps.patch"

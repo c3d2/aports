@@ -1,0 +1,19 @@
+--- src/baresip-0.5.6/Makefile
++++ baresip-patched/Makefile
+@@ -248,14 +248,14 @@
+ 
+ install-shared: $(SHARED) libbaresip.pc
+ 	@mkdir -p $(DESTDIR)$(INCDIR)
+-	$(INSTALL) -Cm 0644 include/baresip.h $(DESTDIR)$(INCDIR)
++	$(INSTALL) -m 0644 include/baresip.h $(DESTDIR)$(INCDIR)
+ 	@mkdir -p $(DESTDIR)$(LIBDIR) $(DESTDIR)$(LIBDIR)/pkgconfig
+ 	$(INSTALL) -m 0644 $(SHARED) $(DESTDIR)$(LIBDIR)
+ 	$(INSTALL) -m 0644 libbaresip.pc $(DESTDIR)$(LIBDIR)/pkgconfig
+ 
+ install-static: $(STATICLIB)
+ 	@mkdir -p $(DESTDIR)$(INCDIR)
+-	$(INSTALL) -Cm 0644 include/baresip.h $(DESTDIR)$(INCDIR)
++	$(INSTALL) -m 0644 include/baresip.h $(DESTDIR)$(INCDIR)
+ 	@mkdir -p $(DESTDIR)$(LIBDIR)
+ 	$(INSTALL) -m 0644 $(STATICLIB) $(DESTDIR)$(LIBDIR)
+ 
