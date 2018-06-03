@@ -2,12 +2,12 @@
 
 pkgname=toxcore
 pkgver=0.2.2
-pkgrel=0
+pkgrel=1
 pkgdesc="Tox communication project - Core Library"
 url="https://tox.chat/"
 arch="all"
 license="GPL"
-makedepends="autoconf automake libtool linux-headers cmake libsodium-dev"
+makedepends="linux-headers cmake libsodium-dev libvpx-dev opus-dev"
 subpackages="$pkgname-dev $pkgname-doc"
 source="$pkgname-$pkgver.tar.gz::https://github.com/TokTok/c-toxcore/archive/v$pkgver.tar.gz"
 options="!check"
