@@ -1,0 +1,34 @@
+# Maintainer: Jonathan Sieber <mail@strfry.org>
+pkgname=sword
+pkgver=1.8.1
+pkgrel=0
+pkgdesc="API/library for bible software"
+url="http://crosswire.org/sword/"
+arch="all"
+license="GPL"
+depends=""
+makedepends="clucene-dev"
+install=""
+subpackages="$pkgname-dev"
+source="http://crosswire.org/ftpmirror/pub/sword/source/v1.8/sword-$pkgver.tar.gz"
+builddir="$srcdir/sword-$pkgver"
+
+build() {
+	cd "$builddir"
+	./configure \
+		--build=$CBUILD \
+		--host=$CHOST \
+		--prefix=/usr \
+		--sysconfdir=/etc \
+		--mandir=/usr/share/man \
+		--localstatedir=/var
+	make
+}
+
+package() {
+	cd "$builddir"
+	make DESTDIR="$pkgdir" install || return 1
+	make DESTDIR="$pkgdir" install_config
+}
+
+sha512sums="5c08c070ea0c86b7d929bbf94c89730eb5a487986deb9edf01c08d1710356aecd1ab3bde4437a778e5fc1ceb05b63287612ec6161381c0986a36344c27d2ab36  sword-1.8.1.tar.gz"

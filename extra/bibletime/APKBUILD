@@ -1,0 +1,41 @@
+# Maintainer: Jonathan Sieber <mail@strfry.org>
+pkgname=bibletime
+pkgver=2.11.2
+pkgrel=0
+pkgdesc="bible study tool for Qt"
+url="http://bibletime.info/"
+arch="all"
+license="GPL"
+depends=""
+makedepends="cmake clucene-dev sword-dev qt5-qttools-dev qt5-qtsvg-dev qt5-qtwebkit-dev"
+install=""
+source="https://github.com/bibletime/bibletime/releases/download/v${pkgver}/bibletime-${pkgver}.tar.xz"
+builddir="$srcdir/$pkgname-$pkgver"
+
+
+build() {
+	cd "$builddir"
+	mkdir -p build
+	cd build
+
+	if [ "$CBUILD" != "$CHOST" ]; then
+		CMAKE_CROSSOPTS="-DCMAKE_SYSTEM_NAME=Linux -DCMAKE_HOST_SYSTEM_NAME=Linux"
+	fi
+	cmake \
+		-DCMAKE_INSTALL_PREFIX=/usr \
+		-DCMAKE_INSTALL_LIBDIR=lib \
+		-DBUILD_SHARED_LIBS=True \
+		-DCMAKE_BUILD_TYPE=Release \
+		-DCMAKE_CXX_FLAGS="$CXXFLAGS" \
+		-DCMAKE_C_FLAGS="$CFLAGS" \
+		${CMAKE_CROSSOPTS} \
+		..
+	make
+}
+
+package() {
+	cd "$builddir"/build
+	make DESTDIR="$pkgdir" install
+}
+
+sha512sums="99e2500e07797549e32ac28238c90a4db1cd98f74ea20f0161db7675127f42363006f20d859504be958bfdecf80a18a96229a1bbc105d332af97644fafc92d31  bibletime-2.11.2.tar.xz"
