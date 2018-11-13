@@ -11,14 +11,18 @@ makedepends="mono-dev openal-soft-dev lua5.1-dev libgdiplus-dev sdl2-dev curl"
 source="https://github.com/OpenRA/OpenRA/releases/download/release-${pkgver}/OpenRA-release-${pkgver}-source.tar.bz2
 fix-lua-soname.patch"
 options="!check"
+builddir="$srcdir"
 
 build() {
+	cd $builddir
+	export TERM=xterm
 	make version
 	make dependencies
 	make all
 }
 
 package() {
+	cd $builddir
 	make -C "$srcdir" prefix=/usr DESTDIR="$pkgdir" install
 }
 
