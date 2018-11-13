@@ -1,20 +1,16 @@
 # Maintainer: Ain <ain@waifu.club>
 pkgname=openra
 pkgver=20180307
-pkgrel=0
+pkgrel=1
 pkgdesc="Open Source real-time strategy game engine for early Westwood games"
 url="http://www.openra.net/"
 arch="all"
 license="GPL"
-depends="mono"
-makedepends="mono-dev openal-soft lua5.1-dev libgdiplus-dev sdl2-dev curl"
+depends="mono openal-soft libgdiplus sdl2 lua5.1"
+makedepends="mono-dev openal-soft-dev lua5.1-dev libgdiplus-dev sdl2-dev curl"
 source="https://github.com/OpenRA/OpenRA/releases/download/release-${pkgver}/OpenRA-release-${pkgver}-source.tar.bz2
 fix-lua-soname.patch"
 options="!check"
-
-prepare() {
-	patch -p1 < "$srcdir"/fix-lua-soname.patch
-}
 
 build() {
 	make version
